@@ -3,8 +3,8 @@ package meteor.renderers;
 
 import com.mojang.logging.LogUtils;
 import meteor.renderers.managers.ShaderManager;
-import meteor.renderers.modules.HandShader;
 import meteor.renderers.managers.ShaderPipelinesManager;
+import meteor.renderers.modules.HandShader;
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.systems.modules.Category;
@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 public class Main extends MeteorAddon {
     public static final Logger LOG = LogUtils.getLogger();
     public static final Category RENDERER_CATEGORY = new Category("Renderer", Items.SPYGLASS.getDefaultStack());
+
     public static ShaderPipelinesManager SHADER_PIPELINE_MANAGER = new ShaderPipelinesManager();
     public static ShaderManager SHADER_MANAGER;
     @Override

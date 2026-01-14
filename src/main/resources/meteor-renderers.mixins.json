@@ -3,11 +3,14 @@
   "package": "meteor.renderers.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ExampleMixin"
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "mixins": [
+    "MeteorRenderPipelinesMixin",
+    "PostProccessShaderMixin",
+    "PostProcessShadersMixin"
   ]
 }

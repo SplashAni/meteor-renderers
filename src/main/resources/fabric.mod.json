@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "meteor-renderers",
+  "version": "${version}",
+  "name": "Meteor Renderers",
+  "description": "Made by the goat SPLASHANI!",
+  "authors": [
+    "SplashAni"
+  ],
+  "contact": {
+    "sources": "https://github.com/MeteorDevelopment/meteor-addon-template"
+  },
+  "icon": "assets/renderers/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "meteor": [
+      "meteor.renderers.Main"
+    ]
+  },
+  "mixins": [
+    "meteor-renderers.mixins.json"
+  ],
+  "custom": {
+    "meteor-client:color": "25,25,255",
+    "modmenu": {
+      "parent": {
+        "id": "meteor-client"
+      }
+    }
+  },
+  "depends": {
+    "java": ">=21",
+    "minecraft": ["${mc_version}"],
+    "meteor-client": "*"
+  }
+}

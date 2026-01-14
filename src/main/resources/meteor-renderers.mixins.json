@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "meteor.renderers.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ExampleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ]
+}

@@ -3,7 +3,8 @@
   "package": "meteor.renderers.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "RenderSystemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

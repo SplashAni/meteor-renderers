@@ -45,6 +45,7 @@ public class ShaderPipelinesManager {
             .withFragmentShader(Identifier.of("renderers", "shaders/".concat(name).concat(".frag")))
             .withSampler("u_Texture")
             .withUniform("PostData", UniformType.UNIFORM_BUFFER)
+            .withUniform("GlowUniforms",UniformType.UNIFORM_BUFFER)
             .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
             .withDepthWrite(false)
             .withBlend(BlendFunction.TRANSLUCENT)

@@ -19,6 +19,7 @@ public class PostProccessShaderMixin {
 
         if ((Object) (this) instanceof CustomShader customShader) {
             if (customShader.isRenderingHand())
+                System.out.println("rendering hand "+customShader.isRenderingHand());
                 original.sampler("u_Depth", mc.getFramebuffer().getDepthAttachmentView(), RenderSystem.getSamplerCache().get(FilterMode.NEAREST));
         }
 

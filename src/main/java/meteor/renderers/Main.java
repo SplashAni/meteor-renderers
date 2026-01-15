@@ -24,7 +24,6 @@ public class Main extends MeteorAddon {
 
         Modules.get().add(new HandShader());
 
-
     }
 
     @Override

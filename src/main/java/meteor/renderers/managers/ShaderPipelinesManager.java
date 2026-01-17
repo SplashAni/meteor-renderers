@@ -16,15 +16,11 @@ import java.util.List;
 public class ShaderPipelinesManager {
 
     private final List<RenderPipeline> preCompileList = new ArrayList<>();
-    public final RenderPipeline HAND_GLOW_PIPELINE = getHandPipeline("glow");
     private boolean didPreCompile;
 
-    public RenderPipeline getHandPipeline(String name) {
-        return registerPipeline(name, true);
-    }
 
-    public RenderPipeline getPipeline(String name) {
-        return registerPipeline(name, false);
+    public RenderPipeline getPipeline(String name, boolean hands) {
+        return registerPipeline(name, hands);
     }
 
     private RenderPipeline registerPipeline(String name, boolean hands) {
@@ -51,7 +47,7 @@ public class ShaderPipelinesManager {
             .withBlend(BlendFunction.TRANSLUCENT)
             .withCull(false);
 
-        if (hands) builder.withSampler("u_Depth"); // depth hackery goes hard!
+        if (hands) builder.withSampler("u_Depth");
 
         return builder.build();
     }

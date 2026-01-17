@@ -2,14 +2,18 @@ package meteor.renderers.modules;
 
 import meteor.renderers.Main;
 import meteor.renderers.event.HandRenderEvent;
-import meteor.renderers.util.ShaderMode;
+import meteor.renderers.shaders.ShaderRenderTarget;
+import meteor.renderers.shaders.ShaderRenderable;
+import meteor.renderers.uniforms.GlowShaderUniforms;
+import meteor.renderers.shaders.ShaderMode;
+import meteordevelopment.meteorclient.renderer.MeshRenderer;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.systems.modules.render.ESP;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.orbit.EventHandler;
+import org.joml.Vector4f;
 
-public class HandShader extends Module {
+public class HandShader extends Module implements ShaderRenderable {
 
     private final SettingGroup sgGeneral = this.settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -47,8 +51,28 @@ public class HandShader extends Module {
 
     @EventHandler
     public void renderHand(HandRenderEvent event) {
-        Main.SHADER_MANAGER.getCustomShader(ShaderMode.GLOW).render();
-
+        Main.SHADER_MANAGER.getShader(shaderMode.get(), ShaderRenderTarget.HANDS).render();
     }
 
+    @Override
+    public boolean shouldRender() {
+        return true;
+    }
+
+    @Override
+    public void setupUniforms(MeshRenderer renderer) {
+        switch (shaderMode.get()) {
+
+            case GLOW -> {
+                Vector4f lines = new Vector4f(lineColor.get().r / 255f, lineColor.get().g / 255f, lineColor.get().b / 255f, lineColor.get().a / 255f);
+
+                Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
+
+                renderer.uniform("GlowUniforms", GlowShaderUniforms.write(radius.get(), lines, fill));
+            }
+            case GRADIENT -> {
+
+            }
+        }
+    }
 }

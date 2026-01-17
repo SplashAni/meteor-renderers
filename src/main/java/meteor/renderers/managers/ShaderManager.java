@@ -3,31 +3,50 @@ package meteor.renderers.managers;
 import meteor.renderers.Main;
 import meteor.renderers.shaders.CustomShader;
 import meteor.renderers.shaders.GlowShader;
-import meteor.renderers.util.ShaderMode;
+import meteor.renderers.shaders.ShaderMode;
+import meteor.renderers.shaders.ShaderRenderTarget;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShaderManager {
-    public List<CustomShader> customShaders = new ArrayList<>();
+
+    private final Map<ShaderMode, EnumMap<ShaderRenderTarget, CustomShader>> shaders =
+        new EnumMap<>(ShaderMode.class);
 
     public ShaderManager() {
+        registerShader(ShaderMode.GLOW);
+    }
+
+    private void registerShader(ShaderMode mode) {
         ShaderPipelinesManager pipelines = Main.SHADER_PIPELINE_MANAGER;
 
-        registerShader(new GlowShader(pipelines.HAND_GLOW_PIPELINE));
+        EnumMap<ShaderRenderTarget, CustomShader> perTarget =
+            new EnumMap<>(ShaderRenderTarget.class);
 
-    }
-
-    public CustomShader getCustomShader(ShaderMode shaderMode) {
-        return switch (shaderMode) { // oh java my beloved
-            case GLOW -> customShaders.getFirst(); // lol ts lowkey not tuff i cant lie
-            case GRADIENT -> null;
-        };
-    }
-
-    private void registerShader(CustomShader customShader) {
-        if (!customShaders.contains(customShader)) {
-            customShaders.add(customShader);
+        for (ShaderRenderTarget target : ShaderRenderTarget.values()) {
+            perTarget.put(target, new GlowShader(target, pipelines.getPipeline(mode.name().toLowerCase(), target == ShaderRenderTarget.HANDS)));
+            System.out.println("Put "+mode +" the target "+perTarget);
         }
+
+        shaders.put(mode, perTarget);
     }
+
+    public List<CustomShader> getShaders() {
+        List<CustomShader> result = new ArrayList<>();
+
+        for (EnumMap<ShaderRenderTarget, CustomShader> perTarget : shaders.values()) {
+            result.addAll(perTarget.values());
+        }
+
+        return result;
+    }
+
+    public CustomShader getShader(ShaderMode mode, ShaderRenderTarget target) {
+        EnumMap<ShaderRenderTarget, CustomShader> map = shaders.get(mode);
+        return map != null ? map.get(target) : null;
+    }
+
 }

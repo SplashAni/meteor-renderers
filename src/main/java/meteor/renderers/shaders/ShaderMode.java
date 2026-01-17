@@ -1,4 +1,4 @@
-package meteor.renderers.util;
+package meteor.renderers.shaders;
 
 public enum ShaderMode {
     GLOW,

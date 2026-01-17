@@ -20,30 +20,38 @@ bool isHand(vec2 uv) {
 }
 
 void main() {
-    vec4 gameTexture = texture(u_Texture, v_TexCoord);
-    float depth = texture(u_Depth, v_TexCoord).r;
 
-    if (depth < 1.0) {
+    vec4 center = texture(u_Texture, v_TexCoord);
+
+
+    if (center.a != 0.0) {
         color = fillColor;
-        return;
-    }
+    } else color = center;
 
-    bool outline = false;
-
-    for (int x = -radius; x <= radius; x++) {
-        for (int y = -radius; y <= radius; y++) {
-            vec2 offset = vec2(x, y) * v_OneTexel;
-            if (isHand(v_TexCoord + offset)) {
-                outline = true;
-                break;
-            }
-        }
-        if (outline) break;
-    }
-
-    if (outline) {
-        color =lineColor;
-    } else {
-        color = gameTexture;
-    }
+    //    vec4 gameTexture = texture(u_Texture, v_TexCoord);
+    //    float depth = texture(u_Depth, v_TexCoord).r;
+    //
+    //    if (depth < 1.0) {
+    //        color = fillColor;
+    //        return;
+    //    }
+    //
+    //    bool outline = false;
+    //
+    //    for (int x = -radius; x <= radius; x++) {
+    //        for (int y = -radius; y <= radius; y++) {
+    //            vec2 offset = vec2(x, y) * v_OneTexel;
+    //            if (isHand(v_TexCoord + offset)) {
+    //                outline = true;
+    //                break;
+    //            }
+    //        }
+    //        if (outline) break;
+    //    }
+    //
+    //    if (outline) {
+    //        color =lineColor;
+    //    } else {
+    //        color = gameTexture;
+    //    }
 }

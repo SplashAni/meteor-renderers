@@ -4,6 +4,7 @@ package meteor.renderers;
 import com.mojang.logging.LogUtils;
 import meteor.renderers.managers.ShaderManager;
 import meteor.renderers.managers.ShaderPipelinesManager;
+import meteor.renderers.modules.EntityShader;
 import meteor.renderers.modules.HandShader;
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
@@ -23,6 +24,7 @@ public class Main extends MeteorAddon {
 
 
         Modules.get().add(new HandShader());
+        Modules.get().add(new EntityShader());
 
     }
 

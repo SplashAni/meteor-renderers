@@ -23,11 +23,6 @@ bool isInnerRegion(vec2 uv) {
     }
 }
 
-// boolean checker only
-bool isOutlineRegion(vec2 uv) {
-    return isInnerRegion(uv);
-}
-
 void main() {
     vec4 gameTexture = texture(u_Texture, v_TexCoord);
 
@@ -37,21 +32,27 @@ void main() {
     }
 
     float best = 0.0;
+    float maxDist = float(radius);
+
+    float closestDist = maxDist + 1.0;
 
     for (int x = -radius; x <= radius; x++) {
         for (int y = -radius; y <= radius; y++) {
+
+            if (x*x + y*y > radius*radius) continue;
+
             vec2 offset = vec2(x, y) * v_OneTexel;
 
-            if (isOutlineRegion(v_TexCoord + offset)) {
+            if (isInnerRegion(v_TexCoord + offset)) {
                 float dist = length(vec2(x, y));
-                float t = 1.0 - (dist / float(radius));
-                best = max(best, t);
+                closestDist = min(closestDist, dist);
             }
         }
     }
 
-    if (best > 0.0) {
-        color = mix(gameTexture, lineColor, best);
+    if (closestDist <= maxDist) {
+        float glowIntensity = 1.0 - (closestDist / maxDist);
+        color = mix(gameTexture, lineColor, glowIntensity);
         return;
     }
 

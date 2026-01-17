@@ -15,7 +15,7 @@ import net.minecraft.entity.Entity;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
-public class EntityPassUtil {
+public class EntityShaderPass {
 
     private final OutlineRenderCommandQueue outlineRenderCommandQueue = new OutlineRenderCommandQueue(); // store entitiy gemotry data
     private RenderDispatcher renderDispatcher;
@@ -26,10 +26,10 @@ public class EntityPassUtil {
         if (renderDispatcher == null) {
             renderDispatcher = new RenderDispatcher(outlineRenderCommandQueue, mc.getBlockRenderManager(), new WrapperImmediateVertexConsumerProvider(() -> provider), mc.getAtlasManager(), NoopOutlineVertexConsumerProvider.INSTANCE, NoopImmediateVertexConsumerProvider.INSTANCE, mc.textRenderer);
         }
-        applyShader(worldRenderState, shader, matrices);
+        renderEntitiesToFBO(worldRenderState, shader, matrices);
     }
 
-    private void applyShader(WorldRenderState worldState, CustomShader postProcessShader, MatrixStack matrices) {
+    private void renderEntitiesToFBO(WorldRenderState worldState, CustomShader postProcessShader, MatrixStack matrices) {
         var camera = worldState.cameraRenderState.pos;
 
         boolean didRenderEntity = false;

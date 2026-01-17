@@ -27,8 +27,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin implements IWorldRenderer {
 
@@ -88,6 +86,8 @@ public class WorldRendererMixin implements IWorldRenderer {
 
     @ModifyExpressionValue(method = "fillEntityRenderStates", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;isRenderingReady(Lnet/minecraft/util/math/BlockPos;)Z"))
     boolean fillEntityRenderStates(boolean original) {
-        return Objects.requireNonNull(Modules.get().get(EntityShader.class)).isActive();
+        if (Modules.get().get(EntityShader.class).isActive()) return true;
+        else return original;
+
     }
 }

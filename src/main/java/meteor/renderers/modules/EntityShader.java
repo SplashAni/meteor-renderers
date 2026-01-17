@@ -6,7 +6,7 @@ import meteor.renderers.shaders.ShaderMode;
 import meteor.renderers.shaders.ShaderRenderTarget;
 import meteor.renderers.shaders.ShaderRenderable;
 import meteor.renderers.uniforms.GlowShaderUniforms;
-import meteor.renderers.util.EntityPassUtil;
+import meteor.renderers.util.EntityShaderPass;
 import meteordevelopment.meteorclient.renderer.MeshRenderer;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -43,7 +43,7 @@ public class EntityShader extends Module implements ShaderRenderable {
         .defaultValue(ShaderMode.GLOW)
         .build()
     );
-    EntityPassUtil entityPassUtil;
+    EntityShaderPass entityShaderPass;
 
     public EntityShader() {
         super(Main.RENDERER_CATEGORY, "entity-shader", "d");
@@ -51,7 +51,7 @@ public class EntityShader extends Module implements ShaderRenderable {
 
     @Override
     public void onActivate() {
-        entityPassUtil = new EntityPassUtil();
+        entityShaderPass = new EntityShaderPass();
         super.onActivate();
     }
 
@@ -66,11 +66,11 @@ public class EntityShader extends Module implements ShaderRenderable {
 
         Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
 
-        renderer.uniform("GlowUniforms", GlowShaderUniforms.write(1, radius.get(), lines, fill));
+        renderer.uniform("GlowUniforms", GlowShaderUniforms.write(ShaderRenderTarget.ENTITY.ordinal(), radius.get(), lines, fill));
     }
 
     @EventHandler
     public void onEntityRender(EntityRenderEvent event) {
-        entityPassUtil.setup(event.getMatrices(), Main.SHADER_MANAGER.getShader(ShaderMode.GLOW, ShaderRenderTarget.ENTITY), event.getRenderStates());
+        entityShaderPass.setup(event.getMatrices(), Main.SHADER_MANAGER.getShader(ShaderMode.GLOW, ShaderRenderTarget.ENTITY), event.getRenderStates());
     }
 }

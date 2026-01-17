@@ -23,15 +23,18 @@ public class ShaderManager {
     private void registerShader(ShaderMode mode) {
         ShaderPipelinesManager pipelines = Main.SHADER_PIPELINE_MANAGER;
 
-        EnumMap<ShaderRenderTarget, CustomShader> perTarget =
+        EnumMap<ShaderRenderTarget, CustomShader> renderTarget =
             new EnumMap<>(ShaderRenderTarget.class);
 
         for (ShaderRenderTarget target : ShaderRenderTarget.values()) {
-            perTarget.put(target, new GlowShader(target, pipelines.getPipeline(mode.name().toLowerCase(), target == ShaderRenderTarget.HANDS)));
-            System.out.println("Put "+mode +" the target "+perTarget);
+
+            renderTarget.put(target, new GlowShader(target, pipelines.getPipeline(mode.name().toLowerCase(), target == ShaderRenderTarget.HANDS)));
+
+            System.out.println("Put "+mode.name() +" the target "+target.name());
+
         }
 
-        shaders.put(mode, perTarget);
+        shaders.put(mode, renderTarget);
     }
 
     public List<CustomShader> getShaders() {

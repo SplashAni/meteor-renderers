@@ -21,16 +21,17 @@ public class GlowShaderUniforms {
         STORAGE.clear();
     }
 
-    public static GpuBufferSlice write(int radius, Vector4f outlineColor, Vector4f fillColor) {
-        return STORAGE.write(new Data(radius, outlineColor, fillColor));
+    public static GpuBufferSlice write(int target, int radius, Vector4f outlineColor, Vector4f fillColor) {
+        return STORAGE.write(new Data(target, radius, outlineColor, fillColor));
     }
 
-    private record Data(int radius, Vector4f outlineColor, Vector4f fillColor)
+    private record Data(int target, int radius, Vector4f outlineColor, Vector4f fillColor)
         implements DynamicUniformStorage.Uploadable {
 
         @Override
         public void write(ByteBuffer buffer) {
             Std140Builder.intoBuffer(buffer)
+                .putInt(target)
                 .putInt(radius)
                 .putVec4(outlineColor.x, outlineColor.y, outlineColor.z, outlineColor.w)
                 .putVec4(fillColor.x, fillColor.y, fillColor.z, fillColor.w);

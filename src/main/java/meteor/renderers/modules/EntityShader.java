@@ -66,7 +66,7 @@ public class EntityShader extends Module implements ShaderRenderable {
 
         Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
 
-        renderer.uniform("GlowUniforms", GlowShaderUniforms.write(radius.get(), lines, fill));
+        renderer.uniform("GlowUniforms", GlowShaderUniforms.write(1, radius.get(), lines, fill));
     }
 
     @EventHandler

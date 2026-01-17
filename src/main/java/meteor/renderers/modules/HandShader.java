@@ -2,10 +2,10 @@ package meteor.renderers.modules;
 
 import meteor.renderers.Main;
 import meteor.renderers.event.HandRenderEvent;
+import meteor.renderers.shaders.ShaderMode;
 import meteor.renderers.shaders.ShaderRenderTarget;
 import meteor.renderers.shaders.ShaderRenderable;
 import meteor.renderers.uniforms.GlowShaderUniforms;
-import meteor.renderers.shaders.ShaderMode;
 import meteordevelopment.meteorclient.renderer.MeshRenderer;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -68,7 +68,7 @@ public class HandShader extends Module implements ShaderRenderable {
 
                 Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
 
-                renderer.uniform("GlowUniforms", GlowShaderUniforms.write(radius.get(), lines, fill));
+                renderer.uniform("GlowUniforms", GlowShaderUniforms.write(0, radius.get(), lines, fill));
             }
             case GRADIENT -> {
 

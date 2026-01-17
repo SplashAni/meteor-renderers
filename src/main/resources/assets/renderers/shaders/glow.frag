@@ -8,6 +8,7 @@ uniform sampler2D u_Texture;
 uniform sampler2D u_Depth;
 
 layout (std140) uniform GlowUniforms {
+    int target;
     int radius;
     vec4 lineColor;
     vec4 fillColor;
@@ -21,37 +22,21 @@ bool isHand(vec2 uv) {
 
 void main() {
 
-    vec4 center = texture(u_Texture, v_TexCoord);
+    vec4 gameTexture = texture(u_Texture, v_TexCoord);
 
+    if (target == 0){
+        float depth = texture(u_Depth, v_TexCoord).r;
+        if (depth < 1.0) {
+            color = fillColor;
+            return;
+        }
+    }
 
-    if (center.a != 0.0) {
-        color = fillColor;
-    } else color = center;
+    if (target == 1 || target == 2){ // bomclatt
+        if (gameTexture.a != 0.0){
+            color = fillColor;
+            return;
+        }
+    }
 
-    //    vec4 gameTexture = texture(u_Texture, v_TexCoord);
-    //    float depth = texture(u_Depth, v_TexCoord).r;
-    //
-    //    if (depth < 1.0) {
-    //        color = fillColor;
-    //        return;
-    //    }
-    //
-    //    bool outline = false;
-    //
-    //    for (int x = -radius; x <= radius; x++) {
-    //        for (int y = -radius; y <= radius; y++) {
-    //            vec2 offset = vec2(x, y) * v_OneTexel;
-    //            if (isHand(v_TexCoord + offset)) {
-    //                outline = true;
-    //                break;
-    //            }
-    //        }
-    //        if (outline) break;
-    //    }
-    //
-    //    if (outline) {
-    //        color =lineColor;
-    //    } else {
-    //        color = gameTexture;
-    //    }
 }

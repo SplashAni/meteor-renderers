@@ -9,7 +9,6 @@ import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public abstract class CustomShader extends PostProcessShader {
 
-    boolean renderingHand;
     public final CustomOutlineVertexConsumerProvider vertexConsumerProvider;
     ShaderRenderTarget target;
 
@@ -20,15 +19,11 @@ public abstract class CustomShader extends PostProcessShader {
         this.vertexConsumerProvider = new CustomOutlineVertexConsumerProvider();
     }
 
-
     @Override
     protected boolean shouldDraw() {
         return true;
     }
 
-    public boolean isRenderingHand() {
-        return renderingHand;
-    }
 
     @Override
     protected void preDraw() {

@@ -4,6 +4,7 @@ package meteor.renderers;
 import com.mojang.logging.LogUtils;
 import meteor.renderers.managers.ShaderManager;
 import meteor.renderers.managers.ShaderPipelinesManager;
+import meteor.renderers.managers.UniformManager;
 import meteor.renderers.modules.EntityShader;
 import meteor.renderers.modules.HandShader;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -19,6 +20,7 @@ public class Main extends MeteorAddon {
 
     public static ShaderPipelinesManager SHADER_PIPELINE_MANAGER = new ShaderPipelinesManager();
     public static ShaderManager SHADER_MANAGER;
+    public static UniformManager UNIFORM_MANAGER;
     @Override
     public void onInitialize() {
 

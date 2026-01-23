@@ -5,6 +5,7 @@ import meteor.renderers.shaders.CustomShader;
 import meteor.renderers.shaders.GlowShader;
 import meteor.renderers.shaders.ShaderMode;
 import meteor.renderers.shaders.ShaderRenderTarget;
+import meteor.renderers.uniforms.ShaderUniform;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -17,7 +18,10 @@ public class ShaderManager {
         new EnumMap<>(ShaderMode.class);
 
     public ShaderManager() {
+
         registerShader(ShaderMode.GLOW);
+
+
     }
 
     private void registerShader(ShaderMode mode) {
@@ -27,14 +31,11 @@ public class ShaderManager {
             new EnumMap<>(ShaderRenderTarget.class);
 
         for (ShaderRenderTarget target : ShaderRenderTarget.values()) {
-
             renderTarget.put(target, new GlowShader(target, pipelines.getPipeline(mode.name().toLowerCase(), target == ShaderRenderTarget.HANDS)));
-
-            System.out.println("Put "+mode.name() +" the target "+target.name());
-
         }
 
         shaders.put(mode, renderTarget);
+
     }
 
     public List<CustomShader> getShaders() {
@@ -47,9 +48,11 @@ public class ShaderManager {
         return result;
     }
 
+
     public CustomShader getShader(ShaderMode mode, ShaderRenderTarget target) {
         EnumMap<ShaderRenderTarget, CustomShader> map = shaders.get(mode);
         return map != null ? map.get(target) : null;
     }
+
 
 }

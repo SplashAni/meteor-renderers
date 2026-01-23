@@ -61,18 +61,11 @@ public class HandShader extends Module implements ShaderRenderable {
 
     @Override
     public void setupUniforms(MeshRenderer renderer) {
-        switch (shaderMode.get()) {
+        Vector4f lines = new Vector4f(lineColor.get().r / 255f, lineColor.get().g / 255f, lineColor.get().b / 255f, lineColor.get().a / 255f);
 
-            case GLOW -> {
-                Vector4f lines = new Vector4f(lineColor.get().r / 255f, lineColor.get().g / 255f, lineColor.get().b / 255f, lineColor.get().a / 255f);
+        Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
 
-                Vector4f fill = new Vector4f(fillColor.get().r / 255f, fillColor.get().g / 255f, fillColor.get().b / 255f, fillColor.get().a / 255f);
-
-                renderer.uniform("GlowUniforms", GlowShaderUniforms.write(ShaderRenderTarget.HANDS.ordinal(), radius.get(), lines, fill));
-            }
-            case GRADIENT -> {
-
-            }
-        }
+        GlowShaderUniforms shaderUniforms = (GlowShaderUniforms) shaderMode.get().getShaderUniform();
+        renderer.uniform("GlowUniforms", shaderUniforms.write(ShaderRenderTarget.HANDS.ordinal(), radius.get(), lines, fill));
     }
 }

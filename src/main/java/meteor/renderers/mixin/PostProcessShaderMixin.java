@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.FilterMode;
 import meteor.renderers.shaders.CustomShader;
+import meteor.renderers.shaders.ShaderRenderTarget;
 import meteordevelopment.meteorclient.renderer.MeshRenderer;
 import meteordevelopment.meteorclient.utils.render.postprocess.PostProcessShader;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +19,7 @@ public class PostProcessShaderMixin {
     private MeshRenderer render(MeshRenderer original) { // adds the depth sampler to the shader for finding out where the hand is ... - SPLASH DEMON XD
 
         if ((Object) (this) instanceof CustomShader customShader) {
-            if (customShader.isRenderingHand())
+            if (customShader.getTarget() == ShaderRenderTarget.HANDS)
                 original.sampler("u_Depth", mc.getFramebuffer().getDepthAttachmentView(), RenderSystem.getSamplerCache().get(FilterMode.NEAREST));
         }
 

@@ -15,6 +15,7 @@ public class GlowShader extends CustomShader {
         super(target, pipeline);
     }
 
+
     @Override
     protected boolean shouldDraw() {
 
@@ -30,11 +31,6 @@ public class GlowShader extends CustomShader {
 
     }
 
-    @Override
-    public void render() {
-        if (target == ShaderRenderTarget.HANDS) renderingHand = true; // pass the depth buffer this way 😩
-        super.render();
-    }
 
     @Override
     protected void setupPass(MeshRenderer renderer) {
